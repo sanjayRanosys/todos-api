@@ -1,3 +1,7 @@
+'use strict';
+/**
+ * Todo Model Schema
+ * */
 const mongoose = require("mongoose"),
     Schema = mongoose.Schema,
     Todo = new Schema({

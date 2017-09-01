@@ -1,14 +1,19 @@
+'use strict';
 const TodoModel = require('../models/todo');
 
 /**
- * ProtoType methods.
+ * Todo Controller.
  */
 const TodoController = {
     server: null,
 
     /**
-     *  Handle the User Listing  Get Request here
-     *  Fetch user listing from  the DB
+     *  Handle the Todos Listing  Get Request here
+     *  Fetch todos from  the DB
+     *
+     *  @param req Request
+     *  @param res Response
+     *  @param next
      */
     GetTodo: function (req, res, next) {
         TodoModel.find({}).select().exec(function (error, todos) {
@@ -22,8 +27,11 @@ const TodoController = {
     },
 
     /**
-     *  Handle the User Listing  Get Request here
-     *  Fetch user listing from  the DB
+     *  Handle the Todo by ID
+     *
+     *  @param req Request
+     *  @param res Response
+     *  @param next
      */
     GetTodoById: function (req, res, next) {
         TodoModel.find({_id: req.params.id}).select().exec(function (error, todo) {
@@ -37,8 +45,12 @@ const TodoController = {
     },
 
     /**
-     *  Handle the Add User Post Request here
+     *  Handle the Add Todo Post Request here
      *  save into the DB
+     *
+     *  @param req Request
+     *  @param res Response
+     *  @param next
      */
     AddTodo: function (req, res, next) {
         res.header('Content-Type', 'application/json');
@@ -65,8 +77,12 @@ const TodoController = {
     },
 
     /**
-     *  Handle the Update User Post Request here
+     *  Handle the Update Todo Put Request here
      *  save into the DB
+     *
+     *  @param req Request
+     *  @param res Response
+     *  @param next
      */
     UpdateTodo: function (req, res, next) {
         res.header('Content-Type', 'application/json');
@@ -96,7 +112,7 @@ const TodoController = {
             if (!data) {
                 res.status(404);
                 res.send({
-                    validationErrors: "No id provided."
+                    validationErrors: "No Data exist for this id."
                 });
                 return;
             }
@@ -106,17 +122,28 @@ const TodoController = {
     },
 
     /**
-     *  Handle the Delete Todo
+     *  Handle the Delete Todo Delete request here
      *  from DB
+     *
+     *  @param req Request
+     *  @param res Response
+     *  @param next
      */
     DeleteTodo: function (req, res) {
         res.header('Content-Type', 'application/json');
+        if (!req.params.id) {
+            res.status(400);
+            res.send({
+                validationErrors: "No id provided."
+            });
+            return;
+        }
+
         TodoModel.findByIdAndRemove(new Object(req.params.id), function (err, todo) {
             if (err) {
                 res.status(500);
                 res.send({
-                    status: false,
-                    data: "Error occured: " + err
+                    validationErrors: "No Data exist for this id."
                 });
                 return;
             }

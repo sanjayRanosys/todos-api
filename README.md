@@ -1,4 +1,4 @@
-# todos-api
+# Todos-api
 I am using Node `restify` framework for `todos app` API
 
 install dependies first by `npm install` and run command `node index.js` for run

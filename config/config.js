@@ -9,7 +9,7 @@ module.exports = {
         },
         host: 'localhost',
         port: '7000',
-        db_url: 'mongodb://localhost:27017/todos',
+        db_url: 'mongodb://dev_acc:devacc123@ds129010.mlab.com:29010/dev_acc',
         version: '1.0.0'
     },
     production: {

@@ -13,7 +13,7 @@ const validator = require('../middleware/validator'),
             validator(req, res, next);
         });
 
-        server.get('/', respond);
+        server.get('/data', respond);
         server.get(REST_URL, todoController.GetTodo);
         server.get(REST_URL_WITH_ID, todoController.GetTodoById);
         server.post(REST_URL, todoController.AddTodo);
